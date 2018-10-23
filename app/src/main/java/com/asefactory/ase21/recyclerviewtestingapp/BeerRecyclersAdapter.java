@@ -34,16 +34,9 @@ public class BeerRecyclersAdapter extends RecyclerView.Adapter<BeerRecyclersAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        BeerObject beerObject = beerObjectList.get(position);
 
-
-        Picasso.get()
-                .load(beerObjectList
-                        .get(position)
-                        .getScreen())
-                .into(viewHolder
-                        .beerLabelImageView);
-        viewHolder.nameTextView.setText(beerObjectList.get(position).getName());
-        viewHolder.aboutTextView.setText(beerObjectList.get(position).getAbout());
+        viewHolder.bind(beerObject);
     }
 
     @Override
@@ -52,15 +45,24 @@ public class BeerRecyclersAdapter extends RecyclerView.Adapter<BeerRecyclersAdap
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView beerLabelImageView;
-        TextView nameTextView;
-        TextView aboutTextView;
+        private ImageView beerLabelImageView;
+        private TextView nameTextView;
+        private TextView aboutTextView;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             beerLabelImageView = itemView.findViewById(R.id.beer_label);
             nameTextView = itemView.findViewById(R.id.beer_name);
             aboutTextView = itemView.findViewById(R.id.about);
+        }
+
+        void bind(BeerObject beerObject){
+            Picasso.get()
+                    .load(beerObject
+                            .getScreen())
+                    .into(beerLabelImageView);
+            nameTextView.setText(beerObject.getName());
+            aboutTextView.setText(beerObject.getAbout());
         }
     }
 }
