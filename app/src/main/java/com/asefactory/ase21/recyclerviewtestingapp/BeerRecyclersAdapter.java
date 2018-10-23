@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BeerRecyclersAdapter extends RecyclerView.Adapter<BeerRecyclersAdapter.ViewHolder> {
-    Context context;
-    List<BeerObject> beerObjectList = new ArrayList<>();
-    LayoutInflater inflater;
+    private Context context;
+    private List<BeerObject> beerObjectList;
+    private LayoutInflater inflater;
 
-    public BeerRecyclersAdapter(Context context, List<BeerObject> beerObjectList) {
+    BeerRecyclersAdapter(Context context, List<BeerObject> beerObjectList) {
         this.context = context;
         this.beerObjectList = beerObjectList;
         inflater = LayoutInflater.from(context);
@@ -34,11 +34,16 @@ public class BeerRecyclersAdapter extends RecyclerView.Adapter<BeerRecyclersAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        BeerObject beer = beerObjectList.get(position);
 
-        Picasso.get().load(beer.getScreen()).into(viewHolder.beerLabelImageView);
-        viewHolder.nameTextView.setText(beer.getName());
-        viewHolder.aboutTextView.setText(beer.getAbout());
+
+        Picasso.get()
+                .load(beerObjectList
+                        .get(position)
+                        .getScreen())
+                .into(viewHolder
+                        .beerLabelImageView);
+        viewHolder.nameTextView.setText(beerObjectList.get(position).getName());
+        viewHolder.aboutTextView.setText(beerObjectList.get(position).getAbout());
     }
 
     @Override
@@ -46,12 +51,12 @@ public class BeerRecyclersAdapter extends RecyclerView.Adapter<BeerRecyclersAdap
         return beerObjectList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder{
         ImageView beerLabelImageView;
         TextView nameTextView;
         TextView aboutTextView;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             beerLabelImageView = itemView.findViewById(R.id.beer_label);
             nameTextView = itemView.findViewById(R.id.beer_name);
