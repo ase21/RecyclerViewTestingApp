@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.asefactory.ase21.recyclerviewtestingapp.pojo.BeerObject;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView textView;
     List<BeerObject> beerObjectList = new ArrayList<>();
 
     @Override
@@ -23,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new BeerRecyclersAdapter(this, beerObjectList));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Thread mainThread = Thread.currentThread();
+        textView = findViewById(R.id.name_thread);
+        textView.setText(mainThread.getName());
     }
 
     private void initBeer() {
